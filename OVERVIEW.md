@@ -33,8 +33,8 @@ Prism is architected to attack each of these directly — and to *measure* the l
 7. **Measured, not claimed** — the harness can prove (or disprove) its own value, and is willing to recommend shrinking itself.
 8. **Honest over reassuring** — flag uncertainty, label confidence, report what held up *and* what broke.
 
-## 4. The nine commands
-Prism is a lifecycle, each stage its own command:
+## 4. The ten commands
+Prism is a lifecycle, each stage its own command — plus one that drives the whole thing:
 
 | Command | Purpose | Method |
 |---|---|---|
@@ -46,6 +46,7 @@ Prism is a lifecycle, each stage its own command:
 | `/prism-retro` | Learn from a shipped plan | Compares predicted vs actual + consumes telemetry → writes *measured* lessons back into memory |
 | `/prism-prune` | Keep memory trustworthy | Re-verifies cited invariants against live code; prunes/corrects stale entries |
 | `/prism-eval` | Prove the fleet beats one pass | Divergence threshold, grounding P/R, fleet-vs-single win-rate, injected-flaw detection, find-the-floor |
+| `/prism-ship` | **Idea → working dapp, one command** | Drives the whole lifecycle autonomously: frame (asks its own gating Qs) → architect → decompose → build each milestone in self-correcting loops → attack with the full feedback fleet → retro/converge. Generates its own follow-up work; loops until done. Pauses only at scope, the approved architecture, and irreversible one-way doors. Cost-tuned: lean fleet to design, full fleet to attack. |
 | `/prism` | Router | Auto-classifies the task and runs the right stage |
 
 ## 5. Architecture
@@ -190,6 +191,19 @@ Install: copy `commands/*.md` into `~/.claude/commands/` (global) or a repo's `.
 (shared). Wire the hooks from `settings.example.json`. Then invoke `/prism-*` from any project. Each
 run states its plan (`Archetype | Mode | Stakes | Fleet: N agents`) and prints a divergence line before
 spending agents.
+
+**Two ways to drive it:**
+- **Step by step** (recommended for real, high-stakes work): `/prism-understand` → `/prism-plan quick`
+  → `/prism-implement` (per milestone) → `/prism-feedback` (full fleet) → `/prism-retro`. You
+  checkpoint between stages.
+- **One command** (`/prism-ship <idea>`): drives the entire lifecycle autonomously, pausing only at
+  scope, the approved architecture, and irreversible one-way doors. Most powerful, least-proven —
+  try it on a small throwaway idea first.
+
+**Evidence-tuned defaults:** use the LEAN/`quick` config for design decisions (the eval showed the
+full fleet doesn't beat a careful pass there at ~5× cost) and the FULL fleet for `/prism-feedback`
+and code review (where it measurably earns its cost). The hooks and project memory are the
+proven-strong parts — keep them on, and commit `.prism/project-model.md` so it compounds.
 
 ---
 

@@ -3,7 +3,8 @@
 **INSTRUCTION FOR THE ASSISTANT:** Using the two source documents in this repo as your material,
 write a polished ~1,500–2,200 word technical article about **Prism**. Read both before writing:
 
-1. [`OVERVIEW.md`](OVERVIEW.md) — what Prism is, the philosophy, the nine commands, the
+1. [`OVERVIEW.md`](OVERVIEW.md) — what Prism is, the philosophy, the ten commands (including
+   `/prism-ship`, which drives the whole lifecycle from idea to working dapp in one command), the
    deliberation engine (differential context → divergence → judge → cross-tier verify → loop →
    telemetry), project memory, enforcement hooks, the proof harness, a worked example, and honest
    limitations.
@@ -19,9 +20,10 @@ write a polished ~1,500–2,200 word technical article about **Prism**. Read bot
   8-lens fleet 5–3 / 4 ties at ~4.6× cost), the finding that the fleet's edge is *defect-finding*
   not general quality, and the honest confounds. Reproduce the results pie + methodology flowchart
   as Mermaid.
-- Cover: the problem, the seven principles, the nine commands, the deliberation engine, project
-  memory, the enforcement hooks (hard rules, not prompts), the cross-tier honesty (cross-tier ≠
-  cross-model; grounding outranks), the worked example, and the honest limitations.
+- Cover: the problem, the seven principles, the ten commands (and the `/prism-ship` one-command
+  lifecycle), the deliberation engine, project memory, the enforcement hooks (hard rules, not
+  prompts), the cross-tier honesty (cross-tier ≠ cross-model; grounding outranks), the worked
+  example, and the honest limitations.
 - **Tone:** technical but readable, for engineers evaluating AI agent tooling. Confident, not hypey.
   The credibility comes from the harness being willing to say "shrink the default."
 - **Do not invent features or numbers.** Use only what's in the two source docs. Keep every
