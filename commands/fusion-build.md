@@ -43,6 +43,8 @@ milestone that isn't really a vertical slice. Rewrite the sequence.
 
 ## Final
 - Lead with the smallest shippable v1, then the full ordered sequence.
+- Hand off to execution: each milestone is built with `/fusion-implement <milestone>` (one
+  slice at a time, self-correcting to green), and reviewed afterward with `/fusion-retro`.
 - Architecture decision (EXPERT FORMAT) + the phased roadmap + open risks.
 - 2-line CHANGELOG: what verification/judgment changed, what risk is still open.
 - PERSIST: if a `docs/` folder exists, save as a NEW numbered file matching the naming

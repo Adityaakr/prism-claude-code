@@ -106,10 +106,13 @@ EXPERT FORMAT — every PLAN/BUILD draft uses this. It's how you (the user) lear
 - Phase 4 — Judge the roadmap for critical-path / dependency errors; rewrite.
 - Final: smallest shippable v1 first, then the full sequence + open risks. PERSIST.
 
-## After shipping
-Once a plan has been implemented, run `/fusion-retro` on it: it compares predicted vs actual
-and writes the lessons back into `.fusion/project-model.md` — closing the loop so the next
-run is smarter. Suggest this when the user reports a fusion-planned feature is built.
+## Build → ship → learn (the closed loop)
+The full lifecycle, each stage its own command:
+understand → plan/build → **implement** → retro.
+- `/fusion-implement <milestone>` is the EXECUTION loop: it writes one slice, runs the tests,
+  and self-corrects until they actually pass (never faking green) — then updates memory.
+- `/fusion-retro` compares predicted vs actual after shipping and banks the lessons.
+Suggest implement after a plan is approved, and retro after a feature is built.
 
 ## Always
 - State the orchestration you're about to run (agent count + roles) BEFORE launching.

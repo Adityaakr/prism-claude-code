@@ -41,6 +41,7 @@ This playbook attacks each of those directly:
 | **`/fusion-understand`** | Understand how existing code or a concept works | Parallel explorers (one per subsystem) → synthesized into one model + a `file:line` map. Builds/updates project memory. Read-only, fast. |
 | **`/fusion-plan`** | Design a feature, change, or architecture decision | Reads project memory → adaptive lens panel → judge → grounding + adversarial verify → refinement loop → saved decision doc |
 | **`/fusion-build`** | Stand up a new project from scratch | Frame the goal → architect the stack (verified) → decompose into a phased, dependency-checked roadmap that ships v1 first |
+| **`/fusion-implement`** | Turn a planned milestone into working code | Write → run tests → diagnose → fix, looping until it actually passes. Regression-safe, never fakes green, escalates instead of thrashing |
 | **`/fusion-retro`** | Learn from a shipped plan | Compares what the plan PREDICTED vs what actually shipped → writes the lessons back into project memory |
 | **`/fusion`** | Not sure which — let it decide | Auto-classifies the task into understand / plan / build and runs the right one |
 
@@ -63,6 +64,29 @@ was right). This skill closes all three gaps — and that's the real differentia
   the lesson back into memory. The next plan starts from what the last one got wrong.
 
 Together: **stateful + grounded + self-improving** — a different category from one-shot tools.
+
+## The closed loop: idea → working code → lessons
+
+The commands form a full lifecycle, each stage banking what it learned into project memory:
+
+```
+understand ──► plan / build ──► implement ──► retro ──┐
+     ▲                                                │
+     └──────────── project memory gets smarter ◄──────┘
+```
+
+`/fusion-implement` is the execution loop that most "AI planner" tools lack: it writes one
+slice, **runs the actual tests**, reads the real errors, and self-corrects until green —
+with hard guards against the classic agent failure modes:
+
+- **Never fakes a pass** — forbidden to delete/skip/weaken a test to go green.
+- **Regression-safe** — runs the *full* suite every iteration, not just the new test.
+- **No infinite loops** — hard cap; on a repeated error it changes strategy, then escalates
+  with a clean handoff instead of thrashing.
+- **Independent verification** — a skeptic agent checks the feature *actually* meets the
+  acceptance criteria (not just that a trivial test passed).
+- **Respects one-way doors** — branches before touching main; stops and asks before deploy,
+  DB migration, secrets, or anything irreversible.
 
 ---
 
