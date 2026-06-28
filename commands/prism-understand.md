@@ -2,7 +2,7 @@
 description: Understand/map existing code or a concept — parallel explorers over each subsystem, synthesized into one coherent model with a file map. Read-only, fast.
 allowed-tools: Task, Read, Grep, Glob, WebSearch, WebFetch, Write
 ---
-# Fusion · Understand: $ARGUMENTS
+# Prism · Understand: $ARGUMENTS
 
 You are the ORCHESTRATOR. Map the thing, don't guess. Run parallel explorers, then
 synthesize ONE coherent model. Lead with a plain-language explanation.
@@ -28,9 +28,9 @@ synthesize ONE coherent model. Lead with a plain-language explanation.
 - Flag anything you could NOT confirm in the code (don't smooth it over).
 - PERSIST only if the user asks: save to `docs/` as a new numbered file, never overwrite.
 
-## Project memory (ALWAYS update — this is what makes fusion compound)
-Write/refine `.fusion/project-model.md` at the repo root (create the file + folder if missing).
-It is a durable, evidence-cited model of THIS project that every future fusion run reads first.
+## Project memory (ALWAYS update — this is what makes prism compound)
+Write/refine `.prism/project-model.md` at the repo root (create the file + folder if missing).
+It is a durable, evidence-cited model of THIS project that every future prism run reads first.
 Sections to maintain:
 - **Architecture** — the components and how they connect.
 - **Invariants** — the rules the code silently relies on (e.g. "amounts are 6-decimal USDC",
@@ -38,7 +38,7 @@ Sections to maintain:
 - **Conventions** — naming, patterns, where things live.
 - **Danger zones** — code that's fragile, security-sensitive, or easy to break.
 - **Decision log** — links to any `docs/NN-*.md` plans.
-- **Lessons** — left for `fusion-retro`; never delete existing ones.
+- **Lessons** — left for `prism-retro`; never delete existing ones.
 RULE: every line about the code carries a `file:line` citation. Update IN PLACE — append and
 refine, never wipe prior content. Stamp the top with today's date + which command updated it.
 Tell the user you updated project memory and what changed.

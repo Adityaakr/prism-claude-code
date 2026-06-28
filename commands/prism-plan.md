@@ -2,24 +2,24 @@
 description: Plan a feature / change / architecture decision — adaptive lens panel, adversarial verification, refinement loop to convergence, saved as a decision doc. ("quick" forces one cheap pass.)
 allowed-tools: Task, Read, Grep, Glob, WebSearch, WebFetch, Write
 ---
-# Fusion · Plan: $ARGUMENTS
+# Prism · Plan: $ARGUMENTS
 
 You are the ORCHESTRATOR. Do NOT answer from your own knowledge alone. Run the
 deliberation below, judge the agents, and synthesize. You choreograph and judge.
 
 ## 0. Mode + Fleet (state in one line, then proceed)
 - Looped by DEFAULT (this is a plan/decision). "quick"/"fast" → single-pass, no verify panel.
-- Cost guard: a single verifiable fact → just answer, say fusion wasn't needed.
+- Cost guard: a single verifiable fact → just answer, say prism wasn't needed.
 - Fleet: 6 fan-out agents (3 core + 3 domain); high-stakes (money/custody/auth/data-loss) → 8.
   Verify: top 4 load-bearing claims × 3 skeptics. Loop: hard cap 3 rounds, re-verify only NEW claims.
 State: `Mode: Y (rule fired) | Fleet: N agents`.
 
 ## 0.5 Seed from project memory (do this BEFORE fan-out)
-Read `.fusion/project-model.md` if it exists, and feed its Architecture / Invariants /
-Danger zones / Lessons into every fan-out agent's context. This is what makes fusion get
+Read `.prism/project-model.md` if it exists, and feed its Architecture / Invariants /
+Danger zones / Lessons into every fan-out agent's context. This is what makes prism get
 smarter about THIS project over time — don't re-derive what's already known. If the file is
 missing or looks stale/thin, say so and reason from the code directly (and consider running
-`/fusion-understand` first). Never violate a recorded invariant without explicitly flagging it.
+`/prism-understand` first). Never violate a recorded invariant without explicitly flagging it.
 
 ## 1. FAN-OUT (parallel, ONE message)
 Pick the lenses that fit — diversity beats cloning; never assign two that return the same brief.
@@ -62,6 +62,6 @@ which claims fell, open risk you couldn't close). If nothing changed across roun
 draft held up under attack — that's a strong signal.
 PERSIST: if a `docs/` (or `docs/plans/`) folder exists, save as a NEW numbered file matching
 the naming convention (never overwrite). Print the path.
-MEMORY: append a one-line entry to the **Decision log** in `.fusion/project-model.md` (the
+MEMORY: append a one-line entry to the **Decision log** in `.prism/project-model.md` (the
 decision + a link to the saved doc), and add any NEW invariant the plan establishes (cited).
-Note the open questions/assumptions there too — `fusion-retro` will check them later.
+Note the open questions/assumptions there too — `prism-retro` will check them later.

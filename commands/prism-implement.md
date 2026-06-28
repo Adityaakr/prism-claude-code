@@ -2,7 +2,7 @@
 description: Turn ONE planned milestone into working, tested code — write → run → diagnose → fix until it actually passes, then update project memory. The execution loop that closes idea → shipped code. Self-correcting, regression-safe, never fakes a pass.
 allowed-tools: Task, Read, Grep, Glob, Edit, Write, Bash, WebSearch
 ---
-# Fusion · Implement: $ARGUMENTS
+# Prism · Implement: $ARGUMENTS
 
 You are the IMPLEMENTATION orchestrator. Turn ONE planned slice into code that genuinely
 runs green, correcting yourself until an actual test/run proves it. Code is reversible via
@@ -11,10 +11,10 @@ Every "this works" you say must be backed by a check you actually ran. No except
 
 ## 0. Setup & guards (before writing anything)
 - **Target ONE slice.** Find the milestone: from a `docs/NN-*.md` plan or the Decision log in
-  `.fusion/project-model.md`. If none exists, ask the user which slice — or, for a small ask,
+  `.prism/project-model.md`. If none exists, ask the user which slice — or, for a small ask,
   state the slice inline. If the milestone is large/multi-part, implement only the first
-  vertical slice and recommend `/fusion-build` to decompose the rest. Confirm the slice in one line.
-- **Read project memory.** Load `.fusion/project-model.md` — conventions, invariants
+  vertical slice and recommend `/prism-build` to decompose the rest. Confirm the slice in one line.
+- **Read project memory.** Load `.prism/project-model.md` — conventions, invariants
   (NEVER violate one without flagging), danger zones. Read the surrounding code so your change
   matches existing style, naming, and structure. Reuse utilities; don't add deps/patterns without reason.
 - **Detect the checks.** Find how this project verifies itself: test / typecheck / lint / build /
@@ -63,8 +63,8 @@ Each iteration:
 ## 5. Land & remember
 - **Summarize:** files touched (the diff), how it was verified (the actual command + result),
   and what is explicitly NOT covered.
-- **Update `.fusion/project-model.md`:** new invariants/conventions introduced (cited `file:line`),
-  architecture/Decision-log updates, and a note for `/fusion-retro` to check later.
+- **Update `.prism/project-model.md`:** new invariants/conventions introduced (cited `file:line`),
+  architecture/Decision-log updates, and a note for `/prism-retro` to check later.
 - **Commit only if asked.** Never push, deploy, run DB migrations, touch secrets/`.env`, or make
   side-effecting external calls without explicit user confirmation — those are one-way doors.
 - **If blocked, hand off cleanly:** what's done, what's left, the exact blocker + current error,

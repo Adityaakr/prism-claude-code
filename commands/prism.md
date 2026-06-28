@@ -2,7 +2,7 @@
 description: Multi-agent orchestration playbook — auto-routes a task into understand/plan/build, fans parallel lenses, adversarially verifies, loops to convergence, and persists. ("quick" forces a single cheap pass.)
 allowed-tools: Task, Read, Grep, Glob, WebSearch, WebFetch, Write
 ---
-# Fusion: $ARGUMENTS
+# Prism: $ARGUMENTS
 
 You are the ORCHESTRATOR. Do NOT answer from your own knowledge alone. Detect the task
 type, run the matching multi-agent orchestration below, judge the agents' output, and
@@ -18,7 +18,7 @@ ARCHETYPE — what kind of work is this?
 MODE:
 - Looped is the DEFAULT for PLAN and BUILD. Single-pass for UNDERSTAND and one-shot questions.
 - Overrides: "deep"/"loop" force looped; "quick"/"fast" force single-pass.
-- Cost guard: a single verifiable fact → just answer, no fan-out, and say fusion wasn't needed.
+- Cost guard: a single verifiable fact → just answer, no fan-out, and say prism wasn't needed.
 
 FLEET SIZING (default counts; scale to stakes):
 - Fan-out agents: 6 (3 core + 3 domain). High-stakes (money/custody/auth/data-loss) → 8.
@@ -50,11 +50,11 @@ JUDGE — read all briefs, produce structured analysis NOT a merge:
 - unique insights only one lens caught
 - blind spots none addressed
 
-MEMORY — read `.fusion/project-model.md` BEFORE fan-out (Architecture/Invariants/Danger
+MEMORY — read `.prism/project-model.md` BEFORE fan-out (Architecture/Invariants/Danger
 zones/Lessons) so you build on accumulated understanding instead of re-deriving it; never
 violate a recorded invariant without flagging. After a PLAN/BUILD run, update it: new
 invariants (cited), a Decision-log entry, assumptions to be checked later. UNDERSTAND runs
-maintain it as their main artifact. This is what makes fusion compound on THIS project.
+maintain it as their main artifact. This is what makes prism compound on THIS project.
 
 VERIFY — two checks. (a) GROUNDING: every claim about the code cites `file:line`; one
 verifier agent re-opens those lines and strikes any claim the citation doesn't support
@@ -109,13 +109,13 @@ EXPERT FORMAT — every PLAN/BUILD draft uses this. It's how you (the user) lear
 ## Build → ship → learn (the closed loop)
 The full lifecycle, each stage its own command:
 understand → plan/build → **implement** → retro.
-- `/fusion-implement <milestone>` is the EXECUTION loop: it writes one slice, runs the tests,
+- `/prism-implement <milestone>` is the EXECUTION loop: it writes one slice, runs the tests,
   and self-corrects until they actually pass (never faking green) — then updates memory.
-- `/fusion-retro` compares predicted vs actual after shipping and banks the lessons.
+- `/prism-retro` compares predicted vs actual after shipping and banks the lessons.
 Suggest implement after a plan is approved, and retro after a feature is built.
 
 ## Always
 - State the orchestration you're about to run (agent count + roles) BEFORE launching.
 - Prefer parallel fan-out; synchronize only when you genuinely need all results together.
 - Flag real uncertainty; never smooth over a contradiction the panel surfaced.
-- If the lenses basically agreed, SAY SO — the task didn't need heavy fusion.
+- If the lenses basically agreed, SAY SO — the task didn't need heavy prism.

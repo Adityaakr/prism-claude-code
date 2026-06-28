@@ -1,4 +1,7 @@
-# Orchestration Playbook Skill
+# Prism 🔱 — an orchestration playbook for Claude Code
+
+> *One question goes in; a prism splits it into a full spectrum of expert perspectives,
+> then recombines them into one verified answer.*
 
 A set of [Claude Code](https://claude.com/claude-code) slash commands that turn a single
 hard question into a **coordinated team of AI agents** — fanning out across diverse
@@ -21,16 +24,16 @@ claims, and only what survives makes it into the final output.
 
 ```mermaid
 flowchart TB
-    U([USER asks a question]) --> R["/fusion  (router)<br/>auto-classifies the task"]
+    U([USER asks a question]) --> R["/prism  (router)<br/>auto-classifies the task"]
 
     R -.routes to one.-> LIFECYCLE
 
     subgraph LIFECYCLE [Lifecycle - each stage banks what it learns into memory]
         direction LR
-        UN["/fusion-understand<br/>map code → memory"]
-        DE["/fusion-plan · /fusion-build<br/>decide + roadmap"]
-        IM["/fusion-implement<br/>write → test → fix (green)"]
-        RE["/fusion-retro<br/>predicted vs actual → lessons"]
+        UN["/prism-understand<br/>map code → memory"]
+        DE["/prism-plan · /prism-build<br/>decide + roadmap"]
+        IM["/prism-implement<br/>write → test → fix (green)"]
+        RE["/prism-retro<br/>predicted vs actual → lessons"]
         UN --> DE --> IM --> RE
     end
 
@@ -50,7 +53,7 @@ flowchart TB
     RE ==writes==> MEM
     MEM -.all stages read.-> ENGINE
 
-    MEM[("PROJECT MEMORY<br/>.fusion/project-model.md<br/>invariants · conventions<br/>danger zones · decisions · lessons")]
+    MEM[("PROJECT MEMORY<br/>.prism/project-model.md<br/>invariants · conventions<br/>danger zones · decisions · lessons")]
 
     classDef cmd fill:#e7f5ff,stroke:#1971c2,color:#0b3d66;
     classDef eng fill:#ebfbee,stroke:#2f9e44,color:#11522a;
@@ -89,19 +92,19 @@ This playbook attacks each of those directly:
 
 ---
 
-## The four commands
+## The six commands
 
 | Command | Use it to… | What runs under the hood |
 |---|---|---|
-| **`/fusion-understand`** | Understand how existing code or a concept works | Parallel explorers (one per subsystem) → synthesized into one model + a `file:line` map. Builds/updates project memory. Read-only, fast. |
-| **`/fusion-plan`** | Design a feature, change, or architecture decision | Reads project memory → adaptive lens panel → judge → grounding + adversarial verify → refinement loop → saved decision doc |
-| **`/fusion-build`** | Stand up a new project from scratch | Frame the goal → architect the stack (verified) → decompose into a phased, dependency-checked roadmap that ships v1 first |
-| **`/fusion-implement`** | Turn a planned milestone into working code | Write → run tests → diagnose → fix, looping until it actually passes. Regression-safe, never fakes green, escalates instead of thrashing |
-| **`/fusion-retro`** | Learn from a shipped plan | Compares what the plan PREDICTED vs what actually shipped → writes the lessons back into project memory |
-| **`/fusion`** | Not sure which — let it decide | Auto-classifies the task into understand / plan / build and runs the right one |
+| **`/prism-understand`** | Understand how existing code or a concept works | Parallel explorers (one per subsystem) → synthesized into one model + a `file:line` map. Builds/updates project memory. Read-only, fast. |
+| **`/prism-plan`** | Design a feature, change, or architecture decision | Reads project memory → adaptive lens panel → judge → grounding + adversarial verify → refinement loop → saved decision doc |
+| **`/prism-build`** | Stand up a new project from scratch | Frame the goal → architect the stack (verified) → decompose into a phased, dependency-checked roadmap that ships v1 first |
+| **`/prism-implement`** | Turn a planned milestone into working code | Write → run tests → diagnose → fix, looping until it actually passes. Regression-safe, never fakes green, escalates instead of thrashing |
+| **`/prism-retro`** | Learn from a shipped plan | Compares what the plan PREDICTED vs what actually shipped → writes the lessons back into project memory |
+| **`/prism`** | Not sure which — let it decide | Auto-classifies the task into understand / plan / build and runs the right one |
 
 All commands share the same primitives (below). The named commands are leaner, focused
-entry points; `/fusion` is the catch-all router.
+entry points; `/prism` is the catch-all router.
 
 ## What makes it different: it compounds
 
@@ -109,13 +112,13 @@ Most prompts and workflows are **stateless** (start from zero every time), **ung
 (reason about your code from a shallow read), and **open-loop** (never learn if their advice
 was right). This skill closes all three gaps — and that's the real differentiator:
 
-- **Project memory** — `/fusion-understand` builds `.fusion/project-model.md`: a durable,
+- **Project memory** — `/prism-understand` builds `.prism/project-model.md`: a durable,
   evidence-cited model of *your* codebase (architecture, **invariants**, danger zones,
   decisions, lessons). Every later run reads it first, so the skill gets smarter about your
   project over time instead of re-deriving it.
 - **Grounding verifier** — every claim about your code must cite `file:line`, and a verifier
   agent *re-opens those lines* to confirm. Hallucinated "your code does X" claims get struck.
-- **Outcome loop** — after you ship, `/fusion-retro` compares predicted vs actual and banks
+- **Outcome loop** — after you ship, `/prism-retro` compares predicted vs actual and banks
   the lesson back into memory. The next plan starts from what the last one got wrong.
 
 Together: **stateful + grounded + self-improving** — a different category from one-shot tools.
@@ -130,7 +133,7 @@ understand ──► plan / build ──► implement ──► retro ──┐
      └──────────── project memory gets smarter ◄──────┘
 ```
 
-`/fusion-implement` is the execution loop that most "AI planner" tools lack: it writes one
+`/prism-implement` is the execution loop that most "AI planner" tools lack: it writes one
 slice, **runs the actual tests**, reads the real errors, and self-corrects until green —
 with hard guards against the classic agent failure modes:
 
@@ -218,19 +221,19 @@ Restart Claude Code (or retype `/`) and the commands appear in the picker.
 
 ```bash
 # Understand an existing system (read-only, fast)
-/fusion-understand explain how invoices get paid in this app end to end
+/prism-understand explain how invoices get paid in this app end to end
 
 # Plan a feature or make an architecture call (auto-loops, verifies, saves a doc)
-/fusion-plan how should a user pay from their existing in-app balance instead of reconnecting a wallet?
+/prism-plan how should a user pay from their existing in-app balance instead of reconnecting a wallet?
 
 # Build something new from scratch (frames -> architects -> phased roadmap)
-/fusion-build a stablecoin payroll dApp on Arbitrum
+/prism-build a stablecoin payroll dApp on Arbitrum
 
 # Let it route automatically
-/fusion <anything>
+/prism <anything>
 
 # Force a fast, cheap pass on any planning question
-/fusion-plan quick should we use embedded wallets or a custodial ledger?
+/prism-plan quick should we use embedded wallets or a custodial ledger?
 ```
 
 Each run **states its plan before spending agents** — e.g.
@@ -240,7 +243,7 @@ Each run **states its plan before spending agents** — e.g.
 
 ## Cost & honesty notes
 
-- These commands spawn **many parallel agents**. A deep `/fusion-plan` or `/fusion-build`
+- These commands spawn **many parallel agents**. A deep `/prism-plan` or `/prism-build`
   run can use dozens of agent calls across its loop rounds — that's the point, but it's
   real token cost. Use `quick` for lightweight questions.
 - More agents are only better when they're **diverse**. The commands enforce this with the

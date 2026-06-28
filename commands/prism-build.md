@@ -2,13 +2,13 @@
 description: Build a project/system from scratch — frame the goal, architect the stack (verified), then decompose into a phased, dependency-checked roadmap that ships v1 first. Saved as a build plan.
 allowed-tools: Task, Read, Grep, Glob, WebSearch, WebFetch, Write
 ---
-# Fusion · Build: $ARGUMENTS
+# Prism · Build: $ARGUMENTS
 
 You are the ORCHESTRATOR for a greenfield build. Don't dump a giant plan — go phase by
 phase, surfacing the decisions that gate everything BEFORE spending agents on detail.
 
 ## Phase 0 — Seed from project memory
-If building inside/around an existing repo, read `.fusion/project-model.md` (if present) and
+If building inside/around an existing repo, read `.prism/project-model.md` (if present) and
 feed its Architecture / Invariants / Danger zones / Lessons into the build. For a true
 greenfield repo there may be none yet — that's fine; you'll create it at the end.
 
@@ -43,12 +43,12 @@ milestone that isn't really a vertical slice. Rewrite the sequence.
 
 ## Final
 - Lead with the smallest shippable v1, then the full ordered sequence.
-- Hand off to execution: each milestone is built with `/fusion-implement <milestone>` (one
-  slice at a time, self-correcting to green), and reviewed afterward with `/fusion-retro`.
+- Hand off to execution: each milestone is built with `/prism-implement <milestone>` (one
+  slice at a time, self-correcting to green), and reviewed afterward with `/prism-retro`.
 - Architecture decision (EXPERT FORMAT) + the phased roadmap + open risks.
 - 2-line CHANGELOG: what verification/judgment changed, what risk is still open.
 - PERSIST: if a `docs/` folder exists, save as a NEW numbered file matching the naming
   convention (never overwrite). Print the path.
-- MEMORY: create/seed `.fusion/project-model.md` with the chosen architecture, the
+- MEMORY: create/seed `.prism/project-model.md` with the chosen architecture, the
   invariants the build will rely on (cited once code exists), danger zones, and a Decision
-  log entry. This becomes the foundation every later fusion run reads from.
+  log entry. This becomes the foundation every later prism run reads from.
