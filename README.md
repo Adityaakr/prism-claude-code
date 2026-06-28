@@ -14,6 +14,61 @@ claims, and only what survives makes it into the final output.
 
 ---
 
+## Architecture at a glance
+
+> ✏️ **Editable hand-drawn version:** [`architecture.excalidraw`](architecture.excalidraw) —
+> open it at [excalidraw.com](https://excalidraw.com) (File → Open) to edit or export a PNG/SVG.
+
+```mermaid
+flowchart TB
+    U([USER asks a question]) --> R["/fusion  (router)<br/>auto-classifies the task"]
+
+    R -.routes to one.-> LIFECYCLE
+
+    subgraph LIFECYCLE [Lifecycle - each stage banks what it learns into memory]
+        direction LR
+        UN["/fusion-understand<br/>map code → memory"]
+        DE["/fusion-plan · /fusion-build<br/>decide + roadmap"]
+        IM["/fusion-implement<br/>write → test → fix (green)"]
+        RE["/fusion-retro<br/>predicted vs actual → lessons"]
+        UN --> DE --> IM --> RE
+    end
+
+    DE --> ENGINE
+    IM --> ENGINE
+
+    subgraph ENGINE [Deliberation Engine - shared by plan / build / implement]
+        direction LR
+        FO["FAN-OUT<br/>6–8 parallel lenses"] --> JU["JUDGE<br/>resolve, not merge"]
+        JU --> VE["VERIFY<br/>grounding file:line<br/>+ 3 skeptics refute"]
+        VE --> LP["LOOP ≤3<br/>to convergence"]
+        LP -.loop until converged.-> FO
+    end
+
+    UN ==writes==> MEM
+    IM ==writes==> MEM
+    RE ==writes==> MEM
+    MEM -.all stages read.-> ENGINE
+
+    MEM[("PROJECT MEMORY<br/>.fusion/project-model.md<br/>invariants · conventions<br/>danger zones · decisions · lessons")]
+
+    classDef cmd fill:#e7f5ff,stroke:#1971c2,color:#0b3d66;
+    classDef eng fill:#ebfbee,stroke:#2f9e44,color:#11522a;
+    classDef mem fill:#fff9db,stroke:#e8590c,color:#7a3500;
+    class UN,DE,IM,RE cmd;
+    class FO,JU,VE,LP eng;
+    class MEM mem;
+```
+
+**How to read it:** one router sends your task to the right stage of a **lifecycle**
+(understand → design → implement → retro). The three heavy stages all run the same
+**Deliberation Engine** — fan out diverse agents, judge their disagreements, verify the
+claims (grounding + skeptics), loop to convergence. Everything reads and writes **Project
+Memory**, so each run makes the next one smarter. That read/write cycle is the part one-shot
+tools don't have.
+
+---
+
 ## Why this exists
 
 A single LLM pass has predictable failure modes:
