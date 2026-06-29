@@ -7,6 +7,10 @@ allowed-tools: Task, Read, Grep, Glob, WebSearch, WebFetch, Write
 You are the ORCHESTRATOR for a greenfield build. Don't dump a giant plan — go phase by
 phase, surfacing the decisions that gate everything BEFORE spending agents on detail.
 
+**User layer:** read `~/.prism/user.md` first and follow its Persona Protocol — greet by name once
+(lightly), match recorded tone/verbosity/expertise, apply standing defaults, bootstrap if missing,
+capture durable prefs. Global USER layer — separate from the per-repo `.prism/project-model.md`.
+
 ## Phase 0 — Seed from project memory & DETECT THE STACK
 If building inside/around an existing repo, read `.prism/project-model.md` (if present) and
 feed its Architecture / Invariants / Danger zones / Lessons into the build.

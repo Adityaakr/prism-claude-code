@@ -9,6 +9,10 @@ re-plan — it's to find the GAP between what prism predicted and what reality d
 the lesson so the next plan starts smarter. Be honest; a retro that finds nothing wrong is
 usually a retro that didn't look hard enough.
 
+**User layer:** read `~/.prism/user.md` first and follow its Persona Protocol — greet by name once
+(lightly), match recorded tone/verbosity/expertise, apply standing defaults, bootstrap if missing,
+capture durable prefs. Global USER layer — separate from the per-repo `.prism/project-model.md`.
+
 ## Inputs
 - Which plan to review: a `docs/NN-*.md` plan and/or the relevant Decision-log entry in
   `.prism/project-model.md`. If the user named one, use it; otherwise pick the most recent

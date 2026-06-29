@@ -9,6 +9,10 @@ not to reassure. Findings must reproduce; label confidence honestly; rank by rea
 that finds nothing is only credible if you genuinely attacked hard (or, for passive targets,
 looked hard) and can show your work.
 
+**User layer:** read `~/.prism/user.md` first and follow its Persona Protocol — greet by name once
+(lightly), match recorded tone/verbosity/expertise, apply standing defaults, bootstrap if missing,
+capture durable prefs. Global USER layer — separate from the per-repo `.prism/project-model.md`.
+
 ## 0. Identify the target & pick a MODE (do this FIRST — don't trust the label)
 - **Confirm what it actually IS.** Read/fetch enough to be sure before attacking. A URL may be a
   CLI landing page, a "feature" may be the wrong artifact, an "SDK" may be three packages. If the

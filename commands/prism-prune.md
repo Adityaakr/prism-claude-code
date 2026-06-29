@@ -8,6 +8,10 @@ You are the ORCHESTRATOR doing memory maintenance. Accumulated memory is only an
 it's TRUE — a stale invariant is worse than no invariant, because later runs trust it. Your
 job: re-verify `.prism/project-model.md` against the current code and prune what no longer holds.
 
+**User layer:** read `~/.prism/user.md` first and follow its Persona Protocol — greet by name once
+(lightly), match recorded tone/verbosity/expertise, apply standing defaults. Global USER layer —
+separate from the per-repo `.prism/project-model.md` CODE layer this command maintains.
+
 ## Steps
 1. **Load.** Read `.prism/project-model.md`. If it doesn't exist, say so and stop.
 2. **Re-verify each cited claim (parallel).** FAN-OUT agents to re-open every `file:line`

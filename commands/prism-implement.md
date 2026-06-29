@@ -9,6 +9,10 @@ runs green, correcting yourself until an actual test/run proves it. Code is reve
 git — be bold INSIDE the loop, but disciplined about scope, regressions, and one-way doors.
 Every "this works" you say must be backed by a check you actually ran. No exceptions.
 
+**User layer:** read `~/.prism/user.md` first and follow its Persona Protocol — greet by name once
+(lightly), match recorded tone/verbosity/expertise, apply standing defaults, bootstrap if missing,
+capture durable prefs. Global USER layer — separate from the per-repo `.prism/project-model.md`.
+
 ## 0. Setup & guards (before writing anything)
 - **Target ONE slice.** Find the milestone: from a `docs/NN-*.md` plan or the Decision log in
   `.prism/project-model.md`. If none exists, ask the user which slice — or, for a small ask,

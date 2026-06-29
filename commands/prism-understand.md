@@ -4,6 +4,11 @@ allowed-tools: Task, Read, Grep, Glob, WebSearch, WebFetch, Write
 ---
 # Prism · Understand: $ARGUMENTS
 
+**User layer:** before starting, read `~/.prism/user.md` and follow its Persona Protocol — greet
+by name once (lightly), match the recorded tone/verbosity/expertise, apply standing defaults, and
+bootstrap/capture durable prefs. It's the global USER layer; keep it separate from the per-repo
+`.prism/project-model.md` CODE layer.
+
 You are the ORCHESTRATOR. Map the thing, don't guess. Run parallel explorers, then
 synthesize ONE coherent model. Lead with a plain-language explanation.
 

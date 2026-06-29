@@ -8,6 +8,10 @@ You are running PRISM'S OWN PROOF HARNESS. Prism's core bet — that fanning one
 lenses + judging + adversarial verify beats a single careful pass — is UNPROVEN. This command
 measures it honestly. It must be willing to report that the fleet does NOT earn its cost.
 
+**User layer:** read `~/.prism/user.md` first and follow its Persona Protocol — greet by name once
+(lightly), match recorded tone/verbosity/expertise. Global USER layer — separate from the per-repo
+`.prism/project-model.md`.
+
 **Honesty rules (non-negotiable):**
 - Report REAL numbers from actual runs against the fixtures. NEVER fabricate a metric. If a
   section wasn't run, label it `NOT RUN` — do not invent results.
