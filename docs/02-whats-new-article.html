@@ -385,12 +385,40 @@
   </section>
 
   <section>
+    <h2>Round two</h2>
+    <h3>The production MVP, shipped and tested where it could be <span class="pill pill-shipped">shipped</span></h3>
+    <p>After the plan, most of its lean MVP shipped to main. Six items:</p>
+    <ul class="tight">
+      <li><strong>Tiered safety guard.</strong> prism-guard.sh now classifies a command by reversibility:
+      it allows reversible deletes like rm -rf node_modules and blocks the dangerous ones (root, home,
+      absolute, wildcard) plus the one-way doors. A test file pins 22 cases so the rules do not regress.</li>
+      <li><strong>Version and drift check.</strong> Commands are copied into place, so a copy drifts from
+      source silently. prism-version.sh compares installed against source by content and reports what is
+      missing, drifted, or stale.</li>
+      <li><strong>Four-tier evidence ladder.</strong> Every load-bearing claim carries a tier: verified,
+      supported, unverified, or contradicted. A claim with no citation is unverified by definition.</li>
+      <li><strong>Retrieval discipline and resume.</strong> Locate before reading (ripgrep plus the Repo
+      Map plus on-demand ctags, never a committed index), read spans not whole files, and write one
+      checkpoint file so a killed run resumes from the last phase.</li>
+      <li><strong>Monorepo detection.</strong> build and implement resolve the package that owns the file
+      you touch and use its own toolchain, instead of assuming one stack for the repo.</li>
+      <li><strong>Memory decision.</strong> The code-truth layer is now git-shared so understanding
+      compounds across clones; the user profile and per-run traces stay private.</li>
+    </ul>
+    <p class="correction"><span class="lead">Honest boundary.</span> The guard and the version check are
+    tested scripts. The evidence tiers, retrieval, checkpoint, and monorepo rules are playbook
+    instructions that self-activate, not compiled features. None of them has run against a real large repo
+    yet, which is the one thing still open.</p>
+  </section>
+
+  <section>
     <h2>What is next</h2>
-    <h3>The production-readiness plan, and what a critic pass cut from it <span class="pill pill-planned">planned</span></h3>
-    <p>The next body of work is making Prism dependable in real engineering use, planned in
-    <code>docs/03-prism-production-readiness.md</code>. The honest framing is the same one that shapes
-    everything here: Prism is markdown playbooks plus hooks plus memory, not a runtime, so production-grade
-    means dependable artifacts and disciplined process, not uptime.</p>
+    <h3>The plan behind round two, and what a critic pass cut from it <span class="pill pill-shipped">shipped</span></h3>
+    <p>Making Prism dependable in real engineering use was planned in
+    <code>docs/03-prism-production-readiness.md</code>, and most of that MVP shipped (Round two above). How
+    the plan got leaner is worth keeping. The honest framing throughout: Prism is markdown playbooks plus
+    hooks plus memory, not a runtime, so production-grade means dependable artifacts and disciplined
+    process, not uptime.</p>
     <p>The first draft of that plan over-built. It proposed a committed symbol and dependency index as the
     keystone, a ten-file run log, an eight-tier evidence ladder, and a seven-file memory split. A cross-tier
     critic pass cut almost all of it.</p>
@@ -417,13 +445,16 @@
     <h2>Honest limits</h2>
     <h3>What is not done <span class="pill pill-open">open</span></h3>
     <ul class="tight">
-      <li>Monorepo build orchestration is detected but not handled. It is the next slice.</li>
+      <li>Live large-repo validation has not happened. The guard, version check, and doc-sync are tested
+      scripts now, but the evidence tiers, retrieval, checkpoint, and monorepo rules are playbook
+      instructions that self-activate. Running them on a real big repo is the test that turns shipped into
+      tested, and it is still open.</li>
+      <li>Monorepo orchestration now has a nearest-manifest-wins rule, but it is unvalidated on a real
+      multi-stack monorepo (a TS frontend next to Rust contracts, for example).</li>
       <li>The Repo Map saves real work only on repeated runs, and its win is modest. Building a faithful map
       still costs about one exploration.</li>
       <li>Anti-slop by instruction is a soft lever. Grounding is the hard one. When a sentence is in doubt,
       the rule is to cut it.</li>
-      <li>These are playbook changes, now merged to main, but they are instructions, not a script. The
-      real test is running them on a live large repo, which has not happened yet.</li>
     </ul>
   </section>
 

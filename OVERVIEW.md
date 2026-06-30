@@ -90,6 +90,12 @@ allocate explorer *depth*, never to exclude code from an audit). The map is a na
 an authority: lenses still open their own slice, no claim is grounded on the map alone, and `/prism-prune`
 re-buckets on OID drift so the routing does not silently run on a stale map.
 
+**Retrieval discipline + resume.** Across all commands, reading follows locate-before-read: query ripgrep
+and the Repo Map first, shell out `ctags` on demand for symbols (never a committed index), and read spans
+rather than whole files. Multi-phase runs write one `.prism/runs/<id>/checkpoint.json` so a killed run
+resumes from the last phase instead of from zero. On a big repo the size gate in `/prism-understand`
+(small / medium / large) picks the strategy automatically, so the user just runs the command as usual.
+
 ### 5c. Divergence metric (W2) — the falsifier
 The cheapest, most diagnostic signal: if the lenses cite the *same* files and reach the *same*
 conclusion, the fleet added nothing. Evidence overlap (Jaccard of `file:line` sets) is weighted
@@ -109,6 +115,13 @@ on a flaw both Opus slots missed. **Honest limits, recorded in telemetry:**
   correlation but not shared-lineage blind spots. Treat cross-tier survival as weaker evidence than
   grounding."*
 
+**Evidence tiers (surfaced on every load-bearing claim).** Those labels roll up into four tiers a reader
+acts on: `verified` (a command ran, a test passed, or a verifier re-opened the cited `file:line`),
+`supported` (an official doc or fresh cited memory, not re-checked; includes `cross-tier-survived`),
+`unverified` (inferred or unchecked, never shown as fact), and `contradicted` (struck or flagged). A
+load-bearing claim with no citation is `unverified` by definition, and each artifact prints a one-line
+evidence summary (e.g. "4 verified, 6 supported, 1 unverified").
+
 ### 5e. Memory — two compounding layers
 Prism keeps **two** durable memories with different lifetimes, deliberately kept separate so neither
 pollutes the other:
@@ -127,12 +140,25 @@ pollutes the other:
   greets *whoever* is at the keyboard. Ships as a sanitized `user.example.md`; the real profile stays
   machine-local (git-ignored), like `settings.example.json`.
 
-### 5f. Enforcement layer — prompts become hard rules
-Two real Claude Code hooks convert "the model should" into "the system enforces":
-- **`prism-guard.sh`** — a `PreToolUse` hook that **blocks one-way doors** (force-push, publish,
-  deploy, DB migration, `rm -rf`, mainnet tx) unless the user approves with a `# PRISM_OK` token.
+**Sharing decision (resolved).** `.gitignore` now SHARES the code-truth layer (`.prism/project-model.md`
+and `.prism/repo-map.md`) so project understanding compounds across clones and teammates, while keeping
+`user.md` and per-run traces (`.prism/runs/`) machine-private. A write protocol (append to the right
+section, re-read before editing, respect a short-lived `.memory.lock`) keeps two concurrent runs from
+clobbering memory.
+
+### 5f. Enforcement & safety tooling — prompts become hard rules
+Real Claude Code hooks plus committed scripts convert "the model should" into "the system enforces":
+- **`prism-guard.sh` (v2, risk-tiered)**: a `PreToolUse` hook that classifies each Bash command by
+  reversibility. RED one-way doors (force-push, push-to-main, publish, deploy, DB migration, mainnet tx,
+  destructive git, and dangerous recursive deletes of root / home / absolute / wildcard paths) are
+  BLOCKED unless approved with `# PRISM_OK`. Reversible deletes like `rm -rf node_modules` are allowed,
+  and a `git commit` on main gets a branch-first nudge. Behavior is pinned by `hooks/test-prism-guard.sh`
+  (22 cases), so the rules do not silently regress.
 - **`prism-gate.sh`** — an integrity check in `/prism-implement` that catches faked-green builds
   (skipped/deleted tests), hardcoded secrets, and leftover debug.
+- **`scripts/prism-version.sh` + `VERSION`** — a drift check. Commands are copied into
+  `~/.claude/commands`, so a copy can drift from source silently; this compares installed vs source by
+  content and reports MISSING / DRIFTED / STALE.
 
 ### 5g. Proof harness — `/prism-eval` + `eval/fixtures/`
 Prism can test its own core bet. Fixtures with ground truth feed four measurements:
@@ -244,22 +270,24 @@ memory is machine-local and does NOT compound across a team as shipped. To share
 private. Whether memory should be team-shared or private is a real decision, not a default; it is the
 first open question in the production-readiness plan below.
 
-## 10. Production-readiness roadmap
-Prism today is promising and grounded. Making it dependable in real engineering use is planned in
-[`docs/03-prism-production-readiness.md`](docs/03-prism-production-readiness.md). The honest framing:
-Prism is markdown playbooks plus hooks plus memory, not a runtime, so production-grade means dependable
-artifacts and disciplined process, not uptime. The lean MVP (after a cross-tier critic pass cut an
-over-built first draft) is:
-- Resolve three foundational gaps: the memory sharing decision above, a version/drift check for the
-  copied playbooks, and a write protocol so two runs do not clobber `project-model.md`.
-- A four-tier evidence ladder (verified / supported / unverified / contradicted) with citation enforcement.
-- A tiered safety guard (rewrite `prism-guard.sh` by reversibility; today it over-blocks `rm -rf
-  node_modules` and under-blocks a local `git commit` on main).
-- One `checkpoint.json` per run for resume.
-- Retrieval discipline (ripgrep + the Repo Map + on-demand ctags, never a committed index that goes stale).
-Everything heavier waits until an eval fixture proves it earns its cost. The honest scorecard behind
-this (why Prism is not yet "9.8", with an objective done-bar per gap) is in
-[`docs/04-path-to-production-grade.md`](docs/04-path-to-production-grade.md).
+## 10. Production-readiness: what shipped, what is left
+The plan is [`docs/03-prism-production-readiness.md`](docs/03-prism-production-readiness.md); the honest
+scorecard with a done-bar per gap is [`docs/04-path-to-production-grade.md`](docs/04-path-to-production-grade.md).
+The framing throughout: Prism is markdown playbooks plus hooks plus memory, not a runtime, so
+production-grade means dependable artifacts and disciplined process, not uptime.
+
+**Shipped (built, tested where testable, on main):**
+- **Tiered safety guard** (`prism-guard.sh` v2): risk-classified, allows reversible `rm -rf node_modules`,
+  blocks dangerous deletes + one-way doors, nudges commit-on-main. Pinned by `hooks/test-prism-guard.sh` (22 cases).
+- **Version + drift check** (`scripts/prism-version.sh` + `VERSION`): hash-based, flags MISSING / DRIFTED / STALE installed commands.
+- **Four-tier evidence ladder** (verified / supported / unverified / contradicted) + citation enforcement (5d).
+- **Retrieval discipline + checkpoint resume** (5b).
+- **Monorepo nearest-manifest-wins** detection in `/prism-build` and `/prism-implement`.
+- **Memory decision made**: the code-truth layer is git-shared, `user.md` + `runs/` stay private (5e), with a write protocol.
+
+**Still open (the one that matters):** live large-repo validation. Every shipped item above is wired in
+and self-activates, but they are playbook instructions and tested scripts, not yet run against a real
+>1000-file repo. That validation is what turns "shipped" into "battle-tested," and it is the next step.
 
 ## 11. Documents
 <!-- prism:docs -->
