@@ -106,6 +106,16 @@ its own internals.
   drift. `OVERVIEW.md` 5b documents it. Closes eval Task 5 (concern-map staleness). DEFERRED per user:
   full monorepo mode (eval Task 10) — only manifest-root detection is present, not per-package build
   orchestration. All three planned features now implemented; nothing committed.
+- **2026-07-02 — `/prism-update` + updater added** (working tree, uncommitted). Closes the "how do
+  existing users get new features" gap: installs COPY commands/hooks into `~/.claude`, so they drift
+  silently. New `scripts/prism-update.sh` (the engine: `git pull --ff-only` guarded against clobbering
+  local command/hook edits → re-copy `commands/prism*.md` + runtime `hooks/prism-*.sh`, test harnesses
+  excluded → prove with `prism-version.sh --check`; flags `--no-pull/--project/--force/--prune`), new
+  `commands/prism-update.md` (thin playbook: locate clone via `~/.prism/config` PRISM_SOURCE or detect
+  or ask once → preview → apply → confirm from the drift check, never `--force`/`--prune` without
+  consent), new `CHANGELOG.md` (human "what's new" source, seeded 0.1.0 + 0.2.0). README install gained
+  a "Staying up to date" section; command tables bumped to twelve. Verified: engine synced 12 cmds into
+  a scratch dir, drift check "in sync", `sync-docs.sh --check` clean.
 
 ## Docs
 - `docs/01-prism-three-improvements.md` — the plan (decision doc) for the three features.

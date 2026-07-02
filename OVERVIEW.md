@@ -33,7 +33,7 @@ Prism is architected to attack each of these directly — and to *measure* the l
 7. **Measured, not claimed** — the harness can prove (or disprove) its own value, and is willing to recommend shrinking itself.
 8. **Honest over reassuring** — flag uncertainty, label confidence, report what held up *and* what broke.
 
-## 4. The eleven commands
+## 4. The twelve commands
 Prism is a lifecycle, each stage its own command — plus one that drives the whole thing:
 
 | Command | Purpose | Method |
@@ -45,6 +45,7 @@ Prism is a lifecycle, each stage its own command — plus one that drives the wh
 | `/prism-feedback` | Adversarially stress-test a target | Confirm what it is + who owns it → active probes (your code) or passive assessment (third-party) → reproduced findings |
 | `/prism-retro` | Learn from a shipped plan | Compares predicted vs actual + consumes telemetry → writes *measured* lessons back into memory |
 | `/prism-prune` | Keep memory trustworthy | Re-verifies cited invariants against live code; prunes/corrects stale entries |
+| `/prism-update` | Update your install to the latest source | Pull the clone → re-sync commands + hooks into `~/.claude` → prove it landed with the drift check → say what is new. Reversible; never touches project code. |
 | `/prism-eval` | Prove the fleet beats one pass | Divergence threshold, grounding P/R, fleet-vs-single win-rate, injected-flaw detection, find-the-floor |
 | `/prism-write` | Write human docs for what you built | README · change summary · retroactive code comments · a clean self-contained HTML article with an architecture diagram. Grounded in real files, human voice, no slop, no em-dashes. JetBrains style by default; asks for the article only. |
 | `/prism-ship` | **Idea → working dapp, one command** | Drives the whole lifecycle autonomously: frame (asks its own gating Qs) → architect → decompose → build each milestone in self-correcting loops → attack with the full feedback fleet → retro/converge. Generates its own follow-up work; loops until done. Pauses only at scope, the approved architecture, and irreversible one-way doors. Cost-tuned: lean fleet to design, full fleet to attack. |
